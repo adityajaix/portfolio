@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+<!-- first view start -->
+<div class="first-view">
+  <div class="light-cable-left">
+    <img src="/light-cable.svg" alt="light cable" />
+  </div>
+  <div class="light-cable-right">
+    <img src="/light-cable.svg" alt="light cable" />
+  </div>
+  <div>
+    <h1 class="title krona-one-regular">{{ config.title | safe }}</h1>
+    <h3 class="sub-title krona-one-regular">{{ config.description | safe }}</h3>
+  </div>
+</div>
+<!-- first view end -->
+<!-- About Start -->
+<div class="about">
+  <h1>About</h1>
+  <div class="icon">
+    <img
+      src="{{ config.extra.coffee.about_image | safe }}"
+      alt="{{ config.extra.coffee.about_image_alt | safe }}"
+      width="{{ config.extra.coffee.about_image_width | safe }}"
+      height="{{ config.extra.coffee.about_image_height | safe }}"
+    />
+  </div>
+  <div class="content">{{ config.extra.coffee.about | safe }}</div>
+</div>
+<!-- about end -->
+<!-- blog list start -->
+<section class="blog-list-section">
+  <h1 class="title">Posts</h1>
+  <a href="{{ config.base_url }}/tags/" class="tags-link">Check all tags >></a>
+  <ul>
+    {%for page in section.pages %}
+    <li>
+      <a class="post-link" href="{{ page.permalink | safe}}">
+        <p class="date">date:&ensp;{{ page.date | safe }}</p>
+        <p class="author">
+          author:&ensp;{%for author in page.authors %}{% if loop.last %}{{
+          author | safe }}{% else %}{{ author | safe }},&ensp;{% endif %} {%
+          endfor %}
+        </p>
+        <h2>{{ page.title | safe }}</h2>
+      </a>
+      <p class="tags">
+        {% for tag in page.taxonomies.tags %} {% if loop.last %}
+        <a href="{{ config.base_url }}/tags/{{ tag | safe }}/"
+          >#{{ tag | safe }}</a
+        >
+        {%else %}
+        <a href="{{ config.base_url }}/tags/{{ tag | safe }}/"
+          >#{{ tag | safe }}</a
+        >,&ensp; {% endif %} {% endfor %}
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<!-- blog list end -->
+{% endblock content %}
